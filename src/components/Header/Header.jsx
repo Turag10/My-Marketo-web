@@ -1,6 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiMenu, FiX, FiChevronDown } from "react-icons/fi";
+import {
+  FiSearch,
+  FiUser,
+  FiHeart,
+  FiShoppingCart,
+  FiMenu,
+  FiX,
+  FiChevronDown,
+} from "react-icons/fi";
+
+// Import your local images from assets
+import home1Img from "../../assets/laptop.webp";
+import home2Img from "../../assets/headphone 2.jpg"
+import home3Img from "../../assets/smartwatch.jpg"
+import home4Img from "../../assets/phones.jpg"
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,103 +23,140 @@ function Header() {
   const [wishlistItems] = useState(0);
   const [showSpinner, setShowSpinner] = useState(false);
 
-  // Function to handle navigation with spinner
   const handleNavigation = (e, destination) => {
     e.preventDefault();
     setShowSpinner(true);
-    
-    // Simulate navigation delay
+
     setTimeout(() => {
       setShowSpinner(false);
-      alert(`Navigating to ${destination}`); // In a real app, you would use react-router navigation here
-    }, 1500);
+      alert(`Navigating to ${destination}`);
+    }, 10);
   };
 
-  // Home dropdown items
+  // Home dropdown items with images from assets
   const homeDropdownItems = [
-    { name: "Home Version 1", path: "/home1" },
-    { name: "Home Version 2", path: "/home2" },
-    { name: "Home Version 3", path: "/home3" },
-    { name: "Home Version 4", path: "/home4" }
+    { name: "Laptop", path: "/home1", img: home1Img },
+    // Add more home items as needed
+    { name: "Headphones", path: "/home2", img: home2Img },
+    { name: "SmartWatches", path: "/home3", img: home3Img },
+    { name: "Phones", path: "/home4", img: home4Img },
   ];
 
-  // Pages dropdown items
   const pagesDropdownItems = [
     { name: "About Us", path: "/about" },
     { name: "Contact", path: "/contact" },
     { name: "FAQ", path: "/faq" },
-    { name: "Terms & Conditions", path: "/terms" }
+    { name: "Terms & Conditions", path: "/terms" },
   ];
 
-  // Shop dropdown items
   const shopDropdownItems = [
     { name: "All Products", path: "/products" },
     { name: "New Arrivals", path: "/new" },
     { name: "Best Sellers", path: "/bestsellers" },
-    { name: "Sale Items", path: "/sale" }
+    { name: "Sale Items", path: "/sale" },
   ];
 
-  // Blog dropdown items
   const blogDropdownItems = [
     { name: "Blog Grid", path: "/blog" },
     { name: "Blog List", path: "/blog/list" },
-    { name: "Single Post", path: "/blog/post" }
+    { name: "Single Post", path: "/blog/post" },
   ];
 
   return (
     <>
-      {/* Spinning Circle */}
+      <style>
+        {`
+          @keyframes rotate-y {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+          }
+          .animate-rotate-y {
+            animation: rotate-y 1s ease-in-out;
+          }
+          .animate-once {
+            animation-iteration-count: 1;
+          }
+          .home-dropdown-card {
+            transition: all 0.3s ease;
+          }
+          .home-dropdown-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+          }
+        `}
+      </style>
+
+      {/* Spinner */}
       {showSpinner && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 border-4 border-red-100 border-t-red-600 rounded-full animate-spin z-50"></div>
       )}
-      
-      <header className="bg-white shadow-md sticky top-0 z-40">
-        {/* Top announcement bar */}
-        <div className="bg-gradient-to-r from-red-600 to-orange-500 text-white text-center py-2 text-sm">
-          Summer Sale: Get 30% off on all products! Use code: SUMMER30
-        </div>
 
-        {/* Main header */}
+      <header className="bg-white shadow-md sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="text-3xl font-bold text-gray-900" onClick={(e) => handleNavigation(e, "Home")}>
+            <Link
+              to="/"
+              className="text-3xl font-bold text-gray-900 animate-rotate-y animate-once"
+              onClick={(e) => handleNavigation(e, "Home")}
+            >
               Market<span className="text-red-600">O</span>.
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Nav */}
             <nav className="hidden md:flex space-x-8">
-              {/* Home with dropdown */}
+              {/* Home Dropdown with Cards */}
               <div className="relative group">
-                <Link 
-                  to="/" 
+                <Link
+                  to="/"
                   className="text-gray-700 hover:text-gray-900 font-medium flex items-center"
                   onClick={(e) => handleNavigation(e, "Home")}
                 >
-                  Home <FiChevronDown className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
+                  Home{" "}
+                  <FiChevronDown className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
                 </Link>
-                <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                  {homeDropdownItems.map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.path}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-red-600 transition-colors"
-                      onClick={(e) => handleNavigation(e, item.name)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+
+                {/* Cards Grid */}
+                <div className="absolute left-0 mt-2 bg-white rounded-md shadow-lg p-4
+                  opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                  transition-all duration-300 z-50 w-[900px]">
+                  {/* Grid layout: 4 cards per row */}
+                  <div className="grid grid-rows-2 sm:grid-cols-2 md:grid-cols-2 gap-4">
+                    {homeDropdownItems.map((item, index) => (
+                      <Link
+                        key={index}
+                        to={item.path}
+                        className=" overflow-hidden hover:shadow-lg transition-all"
+                        onClick={(e) => handleNavigation(e, item.name)}
+                      >
+                        {/* Thumbnail */}
+                        <div className="max-w-full h-40">
+                          <img
+                            src={item.img}
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+
+                        {/* Title */}
+                        <p className="text-center py-2 text-black font-semibold text-lg hover:text-blue-400">
+                          {item.name}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Shop with dropdown */}
+              {/* Shop Dropdown */}
               <div className="relative group">
-                <Link 
-                  to="/products" 
+                <Link
+                  to="/products"
                   className="text-gray-700 hover:text-gray-900 font-medium flex items-center"
                   onClick={(e) => handleNavigation(e, "Shop")}
                 >
-                  Shop <FiChevronDown className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
+                  Shop{" "}
+                  <FiChevronDown className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
                 </Link>
                 <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   {shopDropdownItems.map((item, index) => (
@@ -121,14 +172,15 @@ function Header() {
                 </div>
               </div>
 
-              {/* Pages with dropdown */}
+              {/* Pages Dropdown */}
               <div className="relative group">
-                <Link 
-                  to="/pages" 
+                <Link
+                  to="/pages"
                   className="text-gray-700 hover:text-gray-900 font-medium flex items-center"
                   onClick={(e) => handleNavigation(e, "Pages")}
                 >
-                  Pages <FiChevronDown className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
+                  Pages{" "}
+                  <FiChevronDown className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
                 </Link>
                 <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   {pagesDropdownItems.map((item, index) => (
@@ -144,14 +196,15 @@ function Header() {
                 </div>
               </div>
 
-              {/* Blog with dropdown */}
+              {/* Blog Dropdown */}
               <div className="relative group">
-                <Link 
-                  to="/blog" 
+                <Link
+                  to="/blog"
                   className="text-gray-700 hover:text-gray-900 font-medium flex items-center"
                   onClick={(e) => handleNavigation(e, "Blog")}
                 >
-                  Blog <FiChevronDown className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
+                  Blog{" "}
+                  <FiChevronDown className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
                 </Link>
                 <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   {blogDropdownItems.map((item, index) => (
@@ -167,9 +220,9 @@ function Header() {
                 </div>
               </div>
 
-              {/* Contact without dropdown */}
-              <Link 
-                to="/contact" 
+              {/* Contact */}
+              <Link
+                to="/contact"
                 className="text-gray-700 hover:text-gray-900 font-medium"
                 onClick={(e) => handleNavigation(e, "Contact")}
               >
@@ -177,17 +230,17 @@ function Header() {
               </Link>
             </nav>
 
-            {/* Right side icons */}
+            {/* Right Icons */}
             <div className="flex items-center space-x-4">
               {/* Search */}
               <div className="relative">
-                <button 
+                <button
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
                   className="p-2 text-gray-700 hover:text-gray-900 transition-colors"
                 >
                   <FiSearch size={20} />
                 </button>
-                
+
                 {isSearchOpen && (
                   <div className="absolute right-0 top-12 bg-white shadow-lg rounded-md p-4 w-80 z-50">
                     <div className="flex">
@@ -210,30 +263,30 @@ function Header() {
                   <FiUser size={20} />
                 </button>
                 <div className="absolute right-0 w-48 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                  <Link 
-                    to="/login" 
+                  <Link
+                    to="/login"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-red-600 transition-colors"
                     onClick={(e) => handleNavigation(e, "Login")}
                   >
                     Login
                   </Link>
-                  <Link 
-                    to="/register" 
+                  <Link
+                    to="/register"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-red-600 transition-colors"
                     onClick={(e) => handleNavigation(e, "Register")}
                   >
                     Create Account
                   </Link>
                   <hr className="my-2" />
-                  <Link 
-                    to="/account" 
+                  <Link
+                    to="/account"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-red-600 transition-colors"
                     onClick={(e) => handleNavigation(e, "My Account")}
                   >
                     My Account
                   </Link>
-                  <Link 
-                    to="/orders" 
+                  <Link
+                    to="/orders"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-red-600 transition-colors"
                     onClick={(e) => handleNavigation(e, "Orders")}
                   >
@@ -243,8 +296,8 @@ function Header() {
               </div>
 
               {/* Wishlist */}
-              <Link 
-                to="/wishlist" 
+              <Link
+                to="/wishlist"
                 className="p-2 text-gray-700 hover:text-gray-900 relative transition-colors"
                 onClick={(e) => handleNavigation(e, "Wishlist")}
               >
@@ -257,8 +310,8 @@ function Header() {
               </Link>
 
               {/* Cart */}
-              <Link 
-                to="/cart" 
+              <Link
+                to="/cart"
                 className="p-2 text-gray-700 hover:text-gray-900 relative transition-colors"
                 onClick={(e) => handleNavigation(e, "Cart")}
               >
@@ -270,7 +323,7 @@ function Header() {
                 )}
               </Link>
 
-              {/* Mobile menu button */}
+              {/* Mobile Menu */}
               <button
                 className="md:hidden p-2 text-gray-700 hover:text-gray-900 transition-colors"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -280,55 +333,55 @@ function Header() {
             </div>
           </div>
 
-          {/* Mobile menu */}
+          {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden mt-4 pb-4">
               <nav className="flex flex-col space-y-4">
-                <Link 
-                  to="/" 
+                <Link
+                  to="/"
                   className="text-gray-700 hover:text-gray-900 font-medium py-2 transition-colors"
                   onClick={(e) => handleNavigation(e, "Home")}
                 >
                   Home
                 </Link>
-                <Link 
-                  to="/products" 
+                <Link
+                  to="/products"
                   className="text-gray-700 hover:text-gray-900 font-medium py-2 transition-colors"
                   onClick={(e) => handleNavigation(e, "Shop")}
                 >
                   Shop
                 </Link>
-                <Link 
-                  to="/pages" 
+                <Link
+                  to="/pages"
                   className="text-gray-700 hover:text-gray-900 font-medium py-2 transition-colors"
                   onClick={(e) => handleNavigation(e, "Pages")}
                 >
                   Pages
                 </Link>
-                <Link 
-                  to="/blog" 
+                <Link
+                  to="/blog"
                   className="text-gray-700 hover:text-gray-900 font-medium py-2 transition-colors"
                   onClick={(e) => handleNavigation(e, "Blog")}
                 >
                   Blog
                 </Link>
-                <Link 
-                  to="/contact" 
+                <Link
+                  to="/contact"
                   className="text-gray-700 hover:text-gray-900 font-medium py-2 transition-colors"
                   onClick={(e) => handleNavigation(e, "Contact")}
                 >
                   Contact
                 </Link>
                 <hr className="my-2" />
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="text-gray-700 hover:text-gray-900 font-medium py-2 transition-colors"
                   onClick={(e) => handleNavigation(e, "Login")}
                 >
                   Login
                 </Link>
-                <Link 
-                  to="/register" 
+                <Link
+                  to="/register"
                   className="text-gray-700 hover:text-gray-900 font-medium py-2 transition-colors"
                   onClick={(e) => handleNavigation(e, "Register")}
                 >
