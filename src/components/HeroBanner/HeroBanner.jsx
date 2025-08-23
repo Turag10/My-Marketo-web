@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-import slide1 from "../../assets/model 1.jpg";
-import slide2 from "../../assets/model 2.png";
+import slide1 from "../../assets/model 4.jpg";
+import slide2 from "../../assets/model 5.jpg";
 import slide3 from "../../assets/model3.jpg";
 import promo1 from "../../assets/promo1.png";
 import promo2 from "../../assets/promo2.png";
 
 const HeroBanner = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const [entered, setEntered] = useState(false); // run entry animation once
+  const [entered, setEntered] = useState(false); // slider entry animation
+  const [promoEntered, setPromoEntered] = useState(false); // promo entry animation
 
   const bannerData = [
     {
-      title: "SHOP WISE WITH PRICE COMPARISONS",
-      subtitle: "Get 50% Off",
+      title: "ENJOY THE SECURITY",
+      subtitle: "Amazing offers for security systems",
       image: slide1,
       buttonText: "VIEW COLLECTION",
       buttonText2: "CATEGORIES",
@@ -26,15 +27,15 @@ const HeroBanner = () => {
       buttonText2: "BROWSE DEALS",
     },
     {
-      title: "ENJOY THE SECURITY",
-      subtitle: "Amazing offers for security systems",
+      title: "SHOP WISE WITH PRICE COMPARISONS",
+      subtitle: "Get 50% Off",
       image: slide3,
       buttonText: "EXPLORE",
       buttonText2: "LEARN MORE",
     },
   ];
 
-  // Auto rotate
+  // Auto rotate slider
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveTab((prev) => (prev + 1) % bannerData.length);
@@ -42,20 +43,26 @@ const HeroBanner = () => {
     return () => clearInterval(interval);
   }, [bannerData.length]);
 
-  // Trigger first-load animation after initial paint
+  // Trigger first-load animation for slider
   useEffect(() => {
     const raf = requestAnimationFrame(() => setEntered(true));
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  // Trigger first-load animation for promos
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setPromoEntered(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   const handleTabClick = (index) => setActiveTab(index);
 
-  // helpers for first-load only transitions
+  // helpers for slider first-load only transitions
   const baseTransit = "transition-all ease-out will-change-transform";
-  const slow = "duration-[1200ms]"; // nice & slow
+  const slow = "duration-[1200ms]";
   const shown = "opacity-100 translate-x-0";
-  const fromRight = "opacity-0 translate-x-24";   // moves right ➜ left
-  const fromLeft  = "opacity-0 -translate-x-24";  // moves left ➜ right
+  const fromRight = "opacity-0 translate-x-24"; // right ➜ left
+  const fromLeft = "opacity-0 -translate-x-24"; // left ➜ right
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch mb-10">
@@ -72,7 +79,7 @@ const HeroBanner = () => {
             <img
               src={item.image}
               alt={`slide-${index}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover opacity-100"
             />
             <div className="absolute inset-0 bg-blue-900/40" />
 
@@ -82,19 +89,19 @@ const HeroBanner = () => {
                 <div className="max-w-md text-white">
                   {/* Title: right ➜ left */}
                   <h2
-                    className={`text-4xl font-bold mb-4 leading-tight ${baseTransit} ${slow} ${
+                    className={`${baseTransit} ${slow} ${
                       entered ? shown : fromRight
-                    }`}
+                    } text-4xl font-bold mb-4 leading-tight`}
                     style={{ transitionDelay: entered ? "0ms" : "0ms" }}
                   >
                     {item.title}
                   </h2>
 
-                  {/* Subtitle: right ➜ left, +0.2s */}
+                  {/* Subtitle: right ➜ left */}
                   <p
-                    className={`text-xl text-yellow-300 font-semibold mb-6 ${baseTransit} ${slow} ${
+                    className={`${baseTransit} ${slow} ${
                       entered ? shown : fromRight
-                    }`}
+                    } text-xl text-yellow-300 font-semibold mb-6`}
                     style={{ transitionDelay: entered ? "0ms" : "200ms" }}
                   >
                     {item.subtitle}
@@ -102,21 +109,21 @@ const HeroBanner = () => {
 
                   {/* Buttons */}
                   <div className="flex space-x-4">
-                    {/* Btn1: right ➜ left, +0.4s */}
+                    {/* Btn1: right ➜ left */}
                     <button
-                      className={`px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 ${baseTransit} ${slow} ${
+                      className={`${baseTransit} ${slow} ${
                         entered ? shown : fromRight
-                      }`}
+                      } px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700`}
                       style={{ transitionDelay: entered ? "0ms" : "400ms" }}
                     >
                       {item.buttonText}
                     </button>
 
-                    {/* Btn2: left ➜ right, +0.6s */}
+                    {/* Btn2: left ➜ right */}
                     <button
-                      className={`px-6 py-3 bg-yellow-400 text-black font-medium rounded-lg hover:bg-yellow-500 ${baseTransit} ${slow} ${
+                      className={`${baseTransit} ${slow} ${
                         entered ? shown : fromLeft
-                      }`}
+                      } px-6 py-3 bg-yellow-400 text-black font-medium rounded-lg hover:bg-yellow-500`}
                       style={{ transitionDelay: entered ? "0ms" : "600ms" }}
                     >
                       {item.buttonText2}
@@ -144,11 +151,15 @@ const HeroBanner = () => {
 
       {/* RIGHT COLUMN: Promo Images */}
       <div className="flex flex-col gap-4">
-        <div className="relative group overflow-hidden rounded-xl h-[240px]">
+        {/* Promo 1 */}
+        <div className="relative group overflow-hidden h-[250px]">
           <img
             src={promo1}
             alt="promo1"
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            className={`w-full h-full object-cover transition-all duration-700 ease-out ${
+              promoEntered ? "opacity-100 scale-100" : "opacity-0 scale-105"
+            } group-hover:scale-110`}
+            style={{ transitionDelay: promoEntered ? "0ms" : "0ms" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
             <div className="text-white">
@@ -157,11 +168,16 @@ const HeroBanner = () => {
             </div>
           </div>
         </div>
-        <div className="relative group overflow-hidden rounded-xl h-[240px]">
+
+        {/* Promo 2 */}
+        <div className="relative group overflow-hidden h-[230px]">
           <img
             src={promo2}
             alt="promo2"
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            className={`w-full h-full object-cover transition-all duration-700 ease-out ${
+              promoEntered ? "opacity-100 scale-100" : "opacity-0 scale-105"
+            } group-hover:scale-110`}
+            style={{ transitionDelay: promoEntered ? "200ms" : "200ms" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
             <div className="text-white">

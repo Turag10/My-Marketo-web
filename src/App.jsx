@@ -3,6 +3,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Header from "./components/Header/Header";
 import CategorySection from "./components/categorysection/categorysection";
 import HeroBanner from "./components/HeroBanner/HeroBanner";
+import HolidayDealsSection from "./components/HolidayDealsSection/HolidayDealsSection";
+import TopCategoriesSection from "./components/TopCategorySection/TopCategorySection";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         
         <CategorySection />
         <HeroBanner />
+        <HolidayDealsSection />
+        <TopCategoriesSection />
       </main>
     </Router>
   );
