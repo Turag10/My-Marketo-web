@@ -10,7 +10,7 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 
-// Import your local images from assets
+
 import home1Img from "../../assets/laptop.webp";
 import home2Img from "../../assets/headphone 2.jpg"
 import home3Img from "../../assets/smartwatch.jpg"

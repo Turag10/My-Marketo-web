@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FiSearch, FiMenu, FiChevronRight } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
+import { FiSearch, FiMenu, FiChevronRight, FiX } from "react-icons/fi";
 
 const CategorySection = () => {
   const [expandedMenu, setExpandedMenu] = useState(null);
@@ -7,6 +7,19 @@ const CategorySection = () => {
   const [activeSubcategory, setActiveSubcategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBlackFridayHovered, setIsBlackFridayHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check screen size on mount and resize
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   // Categories data matching Marketo demo
   const allCategories = [
@@ -119,6 +132,12 @@ const CategorySection = () => {
     setActiveSubcategory(subcategory);
   };
 
+  const closeAllMenus = () => {
+    setExpandedMenu(null);
+    setActiveCategory(null);
+    setActiveSubcategory(null);
+  };
+
   const renderProductCards = (products) => {
     return (
       <div className="grid grid-cols-2 gap-3">
@@ -141,15 +160,15 @@ const CategorySection = () => {
   };
 
   return (
-    <section className="bg-white py-8 px-4 relative">
+    <section className="bg-white py-4 md:py-8 px-2 md:px-4 relative">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row gap-4 h-16">
+        <div className="flex flex-col lg:flex-row gap-3 md:gap-4 h-auto lg:h-16">
           
           {/* Left Side - All Categories Dropdown */}
-          <div className="lg:w-1/4 h-full relative">
-            <div className="bg-yellow-300 text-white p-4 rounded-lg flex justify-between items-center cursor-pointer h-full"
+          <div className="w-full lg:w-1/4 h-full relative">
+            <div className="bg-yellow-300 text-gray-900 p-3 md:p-4 rounded-lg flex justify-between items-center cursor-pointer h-14 md:h-full"
                  onClick={() => setExpandedMenu(expandedMenu === "categories" ? null : "categories")}>
-              <h3 className="text-lg font-bold flex items-center">
+              <h3 className="text-base md:text-lg font-bold flex items-center">
                 <FiMenu className="mr-2" />
                 ALL CATEGORIES
               </h3>
@@ -157,7 +176,15 @@ const CategorySection = () => {
             </div>
             
             {expandedMenu === "categories" && (
-              <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4">
+              <div className={`absolute ${isMobile ? 'left-0 right-0' : 'left-0'} top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4 max-h-96 overflow-y-auto`}>
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-semibold text-gray-800">Categories</h3>
+                  {isMobile && (
+                    <button onClick={closeAllMenus} className="text-gray-500 hover:text-red-600">
+                      <FiX size={20} />
+                    </button>
+                  )}
+                </div>
                 <ul className="space-y-2">
                   {allCategories.map((category, index) => (
                     <li
@@ -180,7 +207,7 @@ const CategorySection = () => {
                       </span>
 
                       {/* Show subcategories when category is active */}
-                      {activeCategory?.name === category.name && (
+                      {activeCategory?.name === category.name && !isMobile && (
                         <div className="absolute left-full top-0 ml-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10 p-4">
                           <h4 className="font-semibold text-gray-800 mb-3">Subcategories</h4>
                           <ul className="space-y-2">
@@ -203,7 +230,7 @@ const CategorySection = () => {
                       )}
 
                       {/* Show products when subcategory is active */}
-                      {activeSubcategory && activeCategory?.name === category.name && (
+                      {activeSubcategory && activeCategory?.name === category.name && !isMobile && (
                         <div className="absolute left-full top-0 ml-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-4">
                           <div className="flex justify-between items-center mb-3">
                             <h4 className="font-semibold text-gray-800">{activeSubcategory.name}</h4>
@@ -214,7 +241,7 @@ const CategorySection = () => {
                               }}
                               className="text-gray-500 hover:text-red-600"
                             >
-                              ✕
+                              <FiX size={16} />
                             </button>
                           </div>
                           {renderProductCards(activeSubcategory.products)}
@@ -223,72 +250,110 @@ const CategorySection = () => {
                     </li>
                   ))}
                 </ul>
+
+                {/* Mobile view for subcategories and products */}
+                {isMobile && activeCategory && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex items-center mb-3">
+                      <button 
+                        onClick={() => setActiveCategory(null)} 
+                        className="text-blue-600 mr-2 flex items-center"
+                      >
+                        <FiChevronRight className="rotate-180 mr-1" />
+                        Back
+                      </button>
+                      <h4 className="font-semibold text-gray-800">{activeCategory.name}</h4>
+                    </div>
+                    
+                    <ul className="space-y-2">
+                      {activeCategory.subcategories?.map((sub, subIndex) => (
+                        <li
+                          key={subIndex}
+                          onClick={() => setActiveSubcategory(sub)}
+                          className={`cursor-pointer p-2 rounded text-sm flex justify-between items-center ${
+                            activeSubcategory?.name === sub.name
+                              ? "bg-red-50 text-red-600 font-semibold"
+                              : "text-gray-600 hover:bg-gray-50"
+                          }`}
+                        >
+                          <span>{sub.name}</span>
+                          <FiChevronRight size={14} className="text-gray-400" />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Mobile view for products */}
+                {isMobile && activeSubcategory && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex items-center mb-3">
+                      <button 
+                        onClick={() => setActiveSubcategory(null)} 
+                        className="text-blue-600 mr-2 flex items-center"
+                      >
+                        <FiChevronRight className="rotate-180 mr-1" />
+                        Back
+                      </button>
+                      <h4 className="font-semibold text-gray-800">{activeSubcategory.name}</h4>
+                    </div>
+                    {renderProductCards(activeSubcategory.products)}
+                  </div>
+                )}
               </div>
             )}
           </div>
 
           {/* Middle - Search Bar */}
-          <div className="lg:w-1/2 h-full flex items-center">
-            <div className="w-full bg-white rounded-lg shadow-md p-4 h-full flex items-center">
+          <div className="w-full lg:w-1/2 h-full flex items-center">
+            <div className="w-full bg-white rounded-lg shadow-md p-3 md:p-4 h-14 md:h-full flex items-center">
               <form onSubmit={handleSearch} className="flex w-full">
                 <input
                   type="text"
                   placeholder="Search for products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 border border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 h-12"
+                  className="flex-1 border border-gray-300 rounded-l-lg px-3 md:px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-red-500 h-10 md:h-12 text-sm md:text-base"
                 />
                 <button
                   type="submit"
-                  className="bg-yellow-300 hover:bg-red-700 text-white px-6 rounded-r-lg transition-colors flex items-center h-12"
+                  className="bg-yellow-300 hover:bg-red-700 text-gray-900 hover:text-white px-4 md:px-6 rounded-r-lg transition-colors flex items-center h-10 md:h-12"
                 >
-                  <FiSearch size={20} />
-                  <span className="ml-2"></span>
+                  <FiSearch size={18} />
+                  {!isMobile && <span className="ml-2">Search</span>}
                 </button>
               </form>
             </div>
           </div>
 
           {/* Right Side - Black Friday Banner with Animation */}
-          <div className="lg:w-1/4 h-full">
+          <div className="w-full lg:w-1/4 h-full">
             <div 
-              className={`bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-md p-4 h-full flex flex-col justify-center relative overflow-hidden transition-all duration-500 ${
-                isBlackFridayHovered ? "bg-gradient-to-br from-red-800 to-red-600" : ""
+              className={`bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-md p-3 md:p-4 h-14 md:h-full flex flex-col justify-center relative overflow-hidden transition-all duration-500 ${
+                isBlackFridayHovered ? "bg-gradient-to-br from-white to-black" : ""
               }`}
               onMouseEnter={() => setIsBlackFridayHovered(true)}
               onMouseLeave={() => setIsBlackFridayHovered(false)}
             >
               {/* Animated color overlay */}
               <div 
-                className={`absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 transition-transform duration-500 ${
+                className={`absolute inset-0 bg-gradient-to-r from-white to-black transition-transform duration-500 ${
                   isBlackFridayHovered ? "translate-x-0" : "-translate-x-full"
                 }`}
               ></div>
               
               <div className="relative z-10 text-center">
                 <span className="text-xs font-medium bg-yellow-400 text-red-700 px-2 py-1 rounded-full">HOT</span>
-                <h3 className="text-lg font-bold mt-1">BLACK FRIDAY</h3>
-                <p className="text-xl font-extrabold my-1">45% OFF</p>
-                <button className="bg-white text-red-600 text-xs font-semibold px-4 py-1 rounded-full hover:bg-gray-100 transition-colors relative z-10 mt-1">
-                  Shop Now
-                </button>
+                <h3 className="text-sm md:text-lg font-bold mt-1">BLACK FRIDAY</h3>
+                <p className="text-base md:text-xl font-extrabold my-1">45% OFF</p>
+                {!isMobile && (
+                  <button className="bg-white text-red-600 text-xs font-semibold px-4 py-1 rounded-full hover:bg-gray-100 transition-colors relative z-10 mt-1">
+                    Shop Now
+                  </button>
+                )}
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Popular searches row */}
-        <div className="mt-3 flex flex-wrap gap-2">
-          <span className="text-xs text-gray-500">Popular Searches:</span>
-          {["iPhone", "Laptop", "Headphones", "Watch", "Shoes"].map((item, index) => (
-            <button
-              key={index}
-              onClick={() => setSearchQuery(item)}
-              className="text-xs text-gray-600 hover:text-red-600 bg-gray-100 px-2 py-1 rounded"
-            >
-              {item}
-            </button>
-          ))}
         </div>
       </div>
     </section>

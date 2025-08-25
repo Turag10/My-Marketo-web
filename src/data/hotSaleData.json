@@ -1,0 +1,68 @@
+{
+  "hotSale": [
+    {
+      "id": 1,
+      "name": "Wireless Earbuds Pro",
+      "price": 59.99,
+      "originalPrice": 99.99,
+      "image": "https://images.unsplash.com/photo-1585386959984-a4155224a1b4?auto=format&fit=crop&w=400&q=80",
+      "category": "Earphones"
+    },
+    {
+      "id": 2,
+      "name": "Smart LED TV 50”",
+      "price": 420.00,
+      "originalPrice": 599.99,
+      "image": "https://images.unsplash.com/photo-1601944179061-4aa3a4a2e54f?auto=format&fit=crop&w=400&q=80",
+      "category": "Television"
+    },
+    {
+      "id": 3,
+      "name": "Gaming Laptop GTX",
+      "price": 899.00,
+      "originalPrice": 1099.99,
+      "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
+      "category": "Laptop"
+    },
+    {
+      "id": 4,
+      "name": "Men’s Stylish Sneakers",
+      "price": 79.99,
+      "originalPrice": 120.00,
+      "image": "https://images.unsplash.com/photo-1606813908965-6f0c981bc5f0?auto=format&fit=crop&w=400&q=80",
+      "category": "Shoes"
+    },
+    {
+      "id": 5,
+      "name": "4K Action Camera",
+      "price": 139.00,
+      "originalPrice": 199.99,
+      "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80",
+      "category": "Camera"
+    },
+    {
+      "id": 6,
+      "name": "Smart Watch Series X",
+      "price": 199.99,
+      "originalPrice": 259.99,
+      "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0649?auto=format&fit=crop&w=400&q=80",
+      "category": "Watch"
+    },
+    {
+      "id": 7,
+      "name": "Designer Backpack",
+      "price": 49.99,
+      "originalPrice": 89.99,
+      "image": "https://images.unsplash.com/photo-1522202222206-8e2e5c0b8fda?auto=format&fit=crop&w=400&q=80",
+      "category": "Bags"
+    },
+    {
+      "id": 8,
+      "name": "Bluetooth Home Speaker",
+      "price": 129.00,
+      "originalPrice": 179.99,
+      "image": "https://images.unsplash.com/photo-1586074292709-1f4b7cbd5a8a?auto=format&fit=crop&w=400&q=80",
+      "category": "Speaker"
+    }
+  ]
+}

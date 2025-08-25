@@ -5,6 +5,8 @@ import CategorySection from "./components/categorysection/categorysection";
 import HeroBanner from "./components/HeroBanner/HeroBanner";
 import HolidayDealsSection from "./components/HolidayDealsSection/HolidayDealsSection";
 import TopCategoriesSection from "./components/TopCategorySection/TopCategorySection";
+import HotSale from "./components/HotSale/HotSale";
+import MensClothing from "./components/MensClothing/MensClothing";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <HeroBanner />
         <HolidayDealsSection />
         <TopCategoriesSection />
+        <HotSale />
+        <MensClothing />
       </main>
     </Router>
   );

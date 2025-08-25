@@ -59,7 +59,7 @@ const HeroBanner = () => {
 
   // helpers for slider first-load only transitions
   const baseTransit = "transition-all ease-out will-change-transform";
-  const slow = "duration-[1200ms]";
+  const slow = "duration-[1100ms]";
   const shown = "opacity-100 translate-x-0";
   const fromRight = "opacity-0 translate-x-24"; // right ➜ left
   const fromLeft = "opacity-0 -translate-x-24"; // left ➜ right
@@ -79,7 +79,7 @@ const HeroBanner = () => {
             <img
               src={item.image}
               alt={`slide-${index}`}
-              className="w-full h-full object-cover opacity-100"
+              className="w-full h-full object-cover opacity-1000"
             />
             <div className="absolute inset-0 bg-blue-900/40" />
 
