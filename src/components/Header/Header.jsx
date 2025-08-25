@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   FiSearch,
@@ -9,7 +9,7 @@ import {
   FiX,
   FiChevronDown,
 } from "react-icons/fi";
-
+import { CartContext } from "../CartContext/CartContext";
 
 import home1Img from "../../assets/laptop.webp";
 import home2Img from "../../assets/headphone 2.jpg"
@@ -19,9 +19,12 @@ import home4Img from "../../assets/phones.jpg"
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [cartItems] = useState(0);
   const [wishlistItems] = useState(0);
   const [showSpinner, setShowSpinner] = useState(false);
+  
+  // Use the cart context
+  const { cartItems, getCartCount } = useContext(CartContext);
+  const cartItemsCount = getCartCount();
 
   const handleNavigation = (e, destination) => {
     e.preventDefault();
@@ -33,10 +36,8 @@ function Header() {
     }, 10);
   };
 
-  // Home dropdown items with images from assets
   const homeDropdownItems = [
     { name: "Laptop", path: "/home1", img: home1Img },
-    // Add more home items as needed
     { name: "Headphones", path: "/home2", img: home2Img },
     { name: "SmartWatches", path: "/home3", img: home3Img },
     { name: "Phones", path: "/home4", img: home4Img },
@@ -120,7 +121,6 @@ function Header() {
                 <div className="absolute left-0 mt-2 bg-white rounded-md shadow-lg p-4
                   opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                   transition-all duration-300 z-50 w-[900px]">
-                  {/* Grid layout: 4 cards per row */}
                   <div className="grid grid-rows-2 sm:grid-cols-2 md:grid-cols-2 gap-4">
                     {homeDropdownItems.map((item, index) => (
                       <Link
@@ -129,7 +129,6 @@ function Header() {
                         className=" overflow-hidden hover:shadow-lg transition-all"
                         onClick={(e) => handleNavigation(e, item.name)}
                       >
-                        {/* Thumbnail */}
                         <div className="max-w-full h-40">
                           <img
                             src={item.img}
@@ -137,8 +136,6 @@ function Header() {
                             className="w-full h-full object-cover"
                           />
                         </div>
-
-                        {/* Title */}
                         <p className="text-center py-2 text-black font-semibold text-lg hover:text-blue-400">
                           {item.name}
                         </p>
@@ -309,16 +306,16 @@ function Header() {
                 )}
               </Link>
 
-              {/* Cart */}
+              {/* Cart - Now using the actual cart count from context */}
               <Link
                 to="/cart"
                 className="p-2 text-gray-700 hover:text-gray-900 relative transition-colors"
                 onClick={(e) => handleNavigation(e, "Cart")}
               >
                 <FiShoppingCart size={20} />
-                {cartItems > 0 && (
+                {cartItemsCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                    {cartItems}
+                    {cartItemsCount}
                   </span>
                 )}
               </Link>

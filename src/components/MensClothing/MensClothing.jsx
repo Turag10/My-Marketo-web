@@ -1,154 +1,118 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const MensClothing = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  
-  // Categories data
+  const [activeTab, setActiveTab] = useState(0);
+
   const categories = [
-    'All', 'Mobile', 'Light', 'Laptop', 'Headphone', 
-    'Google Glass', 'Drone', 'Camera', '3D Glass'
-  ];
-  
-  // Products data
-  const products = [
-    {
-      id: 1,
-      name: 'Plonner Men Casual Short',
-      price: 29.00,
-      image: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
-      category: 'Casual'
-    },
-    {
-      id: 2,
-      name: 'Plonner Men Casual Short',
-      price: 29.00,
-      image: 'https://images.unsplash.com/photo-1588117305388-c2631a279f82?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
-      category: 'Casual'
-    },
-    {
-      id: 3,
-      name: 'Plonner Men Casual Short',
-      price: 29.00,
-      image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
-      category: 'Casual'
-    },
-    {
-      id: 4,
-      name: 'Plonner Men Full Sleeve',
-      price: 29.00,
-      image: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
-      category: 'Formal'
-    },
-    {
-      id: 5,
-      name: 'Mens Solid Color Short Sleeve',
-      price: 24.99,
-      image: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
-      category: 'Casual'
-    },
-    {
-      id: 6,
-      name: 'Black Solid Color Full Sleeve',
-      price: 34.99,
-      image: 'https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
-      category: 'Formal'
-    },
-    {
-      id: 7,
-      name: 'JBL Evol Type DC Wifi Speaker',
-      price: 89.99,
-      image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
-      category: 'Electronics'
-    },
-    {
-      id: 8,
-      name: 'JBL Evol Type DC Wifi Speaker',
-      price: 89.99,
-      image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
-      category: 'Electronics'
-    }
+    "Projector",
+    "Mobile",
+    "Light",
+    "Laptop",
+    "Headphone",
+    "Google Glass",
+    "Drone",
+    "Camera",
+    "3D Glass",
   ];
 
-  // Filter products based on selected category
-  const filteredProducts = selectedCategory === 'All' 
-    ? products 
-    : products.filter(product => product.category === selectedCategory);
+  const tabImages = [
+    {
+      src: "https://images.unsplash.com/photo-1602810318383-e5bba5e9d1f3?auto=format&fit=crop&w=600&q=80",
+      label: "New Arrivals",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=600&q=80",
+      label: "Best Sellers",
+    },
+  ];
+
+  const products = [
+    { id: 1, image: "https://images.unsplash.com/photo-1661234567890-abcd1234?auto=format&fit=crop&w=500&q=80", name: "Slim Fit Shirt", price: "$35" },
+    { id: 2, image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=500&q=80", name: "Casual T-Shirt", price: "$25" },
+    { id: 3, image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=500&q=80", name: "Denim Shirt", price: "$40" },
+    { id: 4, image: "https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?auto=format&fit=crop&w=500&q=80", name: "Formal Shirt", price: "$50" },
+    { id: 5, image: "https://images.unsplash.com/photo-1602810318383-e5bba5e9d1f3?auto=format&fit=crop&w=500&q=80", name: "Hoodie", price: "$45" },
+    { id: 6, image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=80", name: "Crew Neck Tee", price: "$28" },
+    { id: 7, image: "https://images.unsplash.com/photo-1612392061784-04b45752c1f9?auto=format&fit=crop&w=500&q=80", name: "Polo Shirt", price: "$38" },
+    { id: 8, image: "https://images.unsplash.com/photo-1520975682038-cb647234f3ec?auto=format&fit=crop&w=500&q=80", name: "Graphic Tee", price: "$22" },
+  ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Section Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Men's Clothing</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Discover our latest collection of men's clothing and accessories
-        </p>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Sidebar with categories */}
-        <div className="w-full lg:w-1/4">
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Categories</h2>
-            <ul className="space-y-2">
-              {categories.map((category) => (
-                <li key={category}>
-                  <button
-                    onClick={() => setSelectedCategory(category)}
-                    className={`w-full text-left px-4 py-2 rounded-md transition-colors ${
-                      selectedCategory === category
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
+    <div className="container mx-auto px-4 py-8 border border-gray-100">
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* LEFT SIDE */}
+        <div className="w-full lg:w-2/3 flex flex-col lg:flex-row gap-4">
+          {/* Categories */}
+          <div className="w-full lg:w-1/2 relative h-100  overflow-hidden border border-gray-100">
+            <img
+              src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=900&q=80"
+              alt="Background"
+              className="w-full h-full object-cover opacity-30"
+            />
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
+              <h2 className="text-2xl font-bold mb-3 text-gray-800">Men's Clothing</h2>
+              <ul className="space-y-1.5 text-gray-700 text-sm">
+                {categories.map((cat, idx) => (
+                  <li
+                    key={idx}
+                    className="cursor-pointer hover:text-blue-600 transition-colors duration-200"
                   >
-                    {category}
-                  </button>
-                </li>
-              ))}
-            </ul>
+                    {cat}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          {/* Special offer banner */}
-          <div className="bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg shadow-md p-6 text-white">
-            <h3 className="text-xl font-semibold mb-2">Special Offer</h3>
-            <p className="mb-4">Get 20% off on all casual wears</p>
-            <button className="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors">
-              Shop Now
-            </button>
+          {/* Tab section with horizontal dots */}
+          <div className="w-full lg:w-1/2 bg-white rounded overflow-hidden border border-gray-100 flex flex-col">
+            {/* Tab image */}
+            <div className="h-70 w-full flex-2">
+              <img
+                src={tabImages[activeTab].src}
+                alt={tabImages[activeTab].label}
+                className="w-full h-full object-cover transition-transform duration-500"
+              />
+            </div>
+
+            {/* Horizontal dots */}
+            <div className="flex justify-center space-x-3 py-3 bg-gray-50">
+              {tabImages.map((tab, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveTab(idx)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    activeTab === idx ? "bg-blue-600 scale-125 shadow-lg" : "bg-gray-300 hover:bg-blue-400"
+                  }`}
+                  title={tab.label}
+                ></button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Products grid */}
-        <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative h-48 overflow-hidden">
+        {/* RIGHT SIDE - Image grid */}
+        <div className="w-full lg:w-2/3 p-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="overflow-hidden"
+              >
+                <div className="relative">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    className="w-full h-40 object-cover transition-all duration-300 hover:scale-105 hover:brightness-110"
                   />
-                  <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-red-50">
-                    <svg className="w-5 h-5 text-gray-600 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </button>
                 </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-800 mb-2">{product.name}</h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-blue-600">${product.price.toFixed(2)}</span>
-                    <button className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors">
-                      Add to Cart
-                    </button>
-                  </div>
+                <div className="p-2 text-center">
+                  <h3 className="text-sm font-medium text-gray-700">{product.name}</h3>
+                  <p className="text-sm font-semibold text-gray-900">{product.price}</p>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Load more button */}
-         
         </div>
       </div>
     </div>

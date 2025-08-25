@@ -7,21 +7,25 @@ import HolidayDealsSection from "./components/HolidayDealsSection/HolidayDealsSe
 import TopCategoriesSection from "./components/TopCategorySection/TopCategorySection";
 import HotSale from "./components/HotSale/HotSale";
 import MensClothing from "./components/MensClothing/MensClothing";
+import { CartProvider } from "./components/CartContext/CartContext";
+import WatchesSection from "./components/WatchesSection/WatchesSection";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <main className="p-6">
-        
-        <CategorySection />
-        <HeroBanner />
-        <HolidayDealsSection />
-        <TopCategoriesSection />
-        <HotSale />
-        <MensClothing />
-      </main>
-    </Router>
+    <CartProvider>
+      <Router>
+        <Header />
+        <main className="p-6">
+          <CategorySection />
+          <HeroBanner />
+          <HolidayDealsSection />
+          <TopCategoriesSection />
+          <HotSale />
+          <MensClothing />
+          <WatchesSection />
+        </main>
+      </Router>
+    </CartProvider>
   );
 }
 

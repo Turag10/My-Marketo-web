@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { FiSearch, FiMenu, FiChevronRight, FiX } from "react-icons/fi";
+import React, { useState, useContext } from "react";
+import { FiSearch, FiMenu, FiChevronRight } from "react-icons/fi";
 
+import { CartContext } from "../CartContext/CartContext";
 const CategorySection = () => {
   const [expandedMenu, setExpandedMenu] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBlackFridayHovered, setIsBlackFridayHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check screen size on mount and resize
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+  
+  // Use the cart context
+  const { addToCart } = useContext(CartContext);
 
   // Categories data matching Marketo demo
   const allCategories = [
@@ -30,16 +21,16 @@ const CategorySection = () => {
         { 
           name: "Dresses", 
           products: [
-            { name: "Summer Dresses", price: "$29.99", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "Evening Dresses", price: "$49.99", image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "Casual Dresses", price: "$39.99", image: "https://images.unsplash.com/photo-1529903384028-929ae5dccdf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
+            { id: 1, name: "Summer Dresses", price: "$29.99", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 2, name: "Evening Dresses", price: "$49.99", image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 3, name: "Casual Dresses", price: "$39.99", image: "https://images.unsplash.com/photo-1529903384028-929ae5dccdf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
           ] 
         },
         { 
           name: "Tops", 
           products: [
-            { name: "Blouses", price: "$24.99", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "T-Shirts", price: "$19.99", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
+            { id: 4, name: "Blouses", price: "$24.99", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 5, name: "T-Shirts", price: "$19.99", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
           ] 
         }
       ]
@@ -51,15 +42,15 @@ const CategorySection = () => {
         { 
           name: "Shirts", 
           products: [
-            { name: "Formal Shirts", price: "$39.99", image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "Casual Shirts", price: "$29.99", image: "https://images.unsplash.com/photo-1503341504253-dff4815485f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
+            { id: 6, name: "Formal Shirts", price: "$39.99", image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 7, name: "Casual Shirts", price: "$29.99", image: "https://images.unsplash.com/photo-1503341504253-dff4815485f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
           ] 
         },
         { 
           name: "Shoes", 
           products: [
-            { name: "Sneakers", price: "$89.99", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "Formal Shoes", price: "$79.99", image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
+            { id: 8, name: "Sneakers", price: "$89.99", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 9, name: "Formal Shoes", price: "$79.99", image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
           ] 
         }
       ]
@@ -71,15 +62,15 @@ const CategorySection = () => {
         { 
           name: "Mobile & Tablets", 
           products: [
-            { name: "Smartphones", price: "$599.99", image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "Tablets", price: "$399.99", image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
+            { id: 10, name: "Smartphones", price: "$599.99", image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 11, name: "Tablets", price: "$399.99", image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
           ] 
         },
         { 
           name: "Laptops", 
           products: [
-            { name: "Gaming Laptops", price: "$1299.99", image: "https://images.unsplash.com/photo-1593642702749-b7d2a804fbcf?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "Ultrabooks", price: "$999.99", image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
+            { id: 12, name: "Gaming Laptops", price: "$1299.99", image: "https://images.unsplash.com/photo-1593642702749-b7d2a804fbcf?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 13, name: "Ultrabooks", price: "$999.99", image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
           ] 
         }
       ]
@@ -91,8 +82,8 @@ const CategorySection = () => {
         { 
           name: "Necklaces", 
           products: [
-            { name: "Gold Necklaces", price: "$199.99", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ad5e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "Silver Necklaces", price: "$99.99", image: "https://images.unsplash.com/photo-1602751584552-8ba73c6e5e19?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
+            { id: 14, name: "Gold Necklaces", price: "$199.99", image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ad5e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 15, name: "Silver Necklaces", price: "$99.99", image: "https://images.unsplash.com/photo-1602751584552-8ba73c6e5e19?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
           ] 
         }
       ]
@@ -104,8 +95,8 @@ const CategorySection = () => {
         { 
           name: "Kitchenware", 
           products: [
-            { name: "Cookware Sets", price: "$149.99", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
-            { name: "Cutlery", price: "$49.99", image: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
+            { id: 16, name: "Cookware Sets", price: "$149.99", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" },
+            { id: 17, name: "Cutlery", price: "$49.99", image: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80" }
           ] 
         }
       ]
@@ -132,17 +123,16 @@ const CategorySection = () => {
     setActiveSubcategory(subcategory);
   };
 
-  const closeAllMenus = () => {
-    setExpandedMenu(null);
-    setActiveCategory(null);
-    setActiveSubcategory(null);
+  const handleAddToCart = (product, e) => {
+    e.stopPropagation();
+    addToCart(product);
   };
 
   const renderProductCards = (products) => {
     return (
       <div className="grid grid-cols-2 gap-3">
         {products.map((product, index) => (
-          <div key={index} className="bg-white rounded p-2 shadow-sm border hover:shadow-md transition-shadow">
+          <div key={product.id} className="bg-white rounded p-2 shadow-sm border hover:shadow-md transition-shadow">
             <img 
               src={product.image} 
               alt={product.name}
@@ -150,7 +140,10 @@ const CategorySection = () => {
             />
             <p className="text-xs font-medium truncate">{product.name}</p>
             <p className="text-xs text-red-600 font-bold">{product.price}</p>
-            <button className="mt-1 text-xs bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition-colors">
+            <button 
+              className="mt-1 text-xs bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition-colors"
+              onClick={(e) => handleAddToCart(product, e)}
+            >
               Add to Cart
             </button>
           </div>
@@ -160,15 +153,15 @@ const CategorySection = () => {
   };
 
   return (
-    <section className="bg-white py-4 md:py-8 px-2 md:px-4 relative">
+    <section className="bg-white py-8 px-4 relative">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row gap-3 md:gap-4 h-auto lg:h-16">
+        <div className="flex flex-col lg:flex-row gap-4 h-16">
           
           {/* Left Side - All Categories Dropdown */}
-          <div className="w-full lg:w-1/4 h-full relative">
-            <div className="bg-yellow-300 text-gray-900 p-3 md:p-4 rounded-lg flex justify-between items-center cursor-pointer h-14 md:h-full"
+          <div className="lg:w-1/4 h-full relative">
+            <div className="bg-yellow-300 text-white p-4 rounded-lg flex justify-between items-center cursor-pointer h-full"
                  onClick={() => setExpandedMenu(expandedMenu === "categories" ? null : "categories")}>
-              <h3 className="text-base md:text-lg font-bold flex items-center">
+              <h3 className="text-lg font-bold flex items-center">
                 <FiMenu className="mr-2" />
                 ALL CATEGORIES
               </h3>
@@ -176,15 +169,7 @@ const CategorySection = () => {
             </div>
             
             {expandedMenu === "categories" && (
-              <div className={`absolute ${isMobile ? 'left-0 right-0' : 'left-0'} top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4 max-h-96 overflow-y-auto`}>
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className="font-semibold text-gray-800">Categories</h3>
-                  {isMobile && (
-                    <button onClick={closeAllMenus} className="text-gray-500 hover:text-red-600">
-                      <FiX size={20} />
-                    </button>
-                  )}
-                </div>
+              <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4">
                 <ul className="space-y-2">
                   {allCategories.map((category, index) => (
                     <li
@@ -207,7 +192,7 @@ const CategorySection = () => {
                       </span>
 
                       {/* Show subcategories when category is active */}
-                      {activeCategory?.name === category.name && !isMobile && (
+                      {activeCategory?.name === category.name && (
                         <div className="absolute left-full top-0 ml-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10 p-4">
                           <h4 className="font-semibold text-gray-800 mb-3">Subcategories</h4>
                           <ul className="space-y-2">
@@ -230,7 +215,7 @@ const CategorySection = () => {
                       )}
 
                       {/* Show products when subcategory is active */}
-                      {activeSubcategory && activeCategory?.name === category.name && !isMobile && (
+                      {activeSubcategory && activeCategory?.name === category.name && (
                         <div className="absolute left-full top-0 ml-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-4">
                           <div className="flex justify-between items-center mb-3">
                             <h4 className="font-semibold text-gray-800">{activeSubcategory.name}</h4>
@@ -241,7 +226,7 @@ const CategorySection = () => {
                               }}
                               className="text-gray-500 hover:text-red-600"
                             >
-                              <FiX size={16} />
+                              ✕
                             </button>
                           </div>
                           {renderProductCards(activeSubcategory.products)}
@@ -250,86 +235,36 @@ const CategorySection = () => {
                     </li>
                   ))}
                 </ul>
-
-                {/* Mobile view for subcategories and products */}
-                {isMobile && activeCategory && (
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center mb-3">
-                      <button 
-                        onClick={() => setActiveCategory(null)} 
-                        className="text-blue-600 mr-2 flex items-center"
-                      >
-                        <FiChevronRight className="rotate-180 mr-1" />
-                        Back
-                      </button>
-                      <h4 className="font-semibold text-gray-800">{activeCategory.name}</h4>
-                    </div>
-                    
-                    <ul className="space-y-2">
-                      {activeCategory.subcategories?.map((sub, subIndex) => (
-                        <li
-                          key={subIndex}
-                          onClick={() => setActiveSubcategory(sub)}
-                          className={`cursor-pointer p-2 rounded text-sm flex justify-between items-center ${
-                            activeSubcategory?.name === sub.name
-                              ? "bg-red-50 text-red-600 font-semibold"
-                              : "text-gray-600 hover:bg-gray-50"
-                          }`}
-                        >
-                          <span>{sub.name}</span>
-                          <FiChevronRight size={14} className="text-gray-400" />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Mobile view for products */}
-                {isMobile && activeSubcategory && (
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex items-center mb-3">
-                      <button 
-                        onClick={() => setActiveSubcategory(null)} 
-                        className="text-blue-600 mr-2 flex items-center"
-                      >
-                        <FiChevronRight className="rotate-180 mr-1" />
-                        Back
-                      </button>
-                      <h4 className="font-semibold text-gray-800">{activeSubcategory.name}</h4>
-                    </div>
-                    {renderProductCards(activeSubcategory.products)}
-                  </div>
-                )}
               </div>
             )}
           </div>
 
           {/* Middle - Search Bar */}
-          <div className="w-full lg:w-1/2 h-full flex items-center">
-            <div className="w-full bg-white rounded-lg shadow-md p-3 md:p-4 h-14 md:h-full flex items-center">
+          <div className="lg:w-1/2 h-full flex items-center">
+            <div className="w-full bg-white rounded-lg shadow-md p-4 h-full flex items-center">
               <form onSubmit={handleSearch} className="flex w-full">
                 <input
                   type="text"
                   placeholder="Search for products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 border border-gray-300 rounded-l-lg px-3 md:px-4 py-2 md:py-3 focus:outline-none focus:ring-2 focus:ring-red-500 h-10 md:h-12 text-sm md:text-base"
+                  className="flex-1 border border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 h-12"
                 />
                 <button
                   type="submit"
-                  className="bg-yellow-300 hover:bg-red-700 text-gray-900 hover:text-white px-4 md:px-6 rounded-r-lg transition-colors flex items-center h-10 md:h-12"
+                  className="bg-yellow-300 hover:bg-red-700 text-white px-6 rounded-r-lg transition-colors flex items-center h-12"
                 >
-                  <FiSearch size={18} />
-                  {!isMobile && <span className="ml-2">Search</span>}
+                  <FiSearch size={20} />
+                  <span className="ml-2"></span>
                 </button>
               </form>
             </div>
           </div>
 
           {/* Right Side - Black Friday Banner with Animation */}
-          <div className="w-full lg:w-1/4 h-full">
+          <div className="lg:w-1/4 h-full">
             <div 
-              className={`bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-md p-3 md:p-4 h-14 md:h-full flex flex-col justify-center relative overflow-hidden transition-all duration-500 ${
+              className={`bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-md p-4 h-full flex flex-col justify-center relative overflow-hidden transition-all duration-500 ${
                 isBlackFridayHovered ? "bg-gradient-to-br from-white to-black" : ""
               }`}
               onMouseEnter={() => setIsBlackFridayHovered(true)}
@@ -344,13 +279,11 @@ const CategorySection = () => {
               
               <div className="relative z-10 text-center">
                 <span className="text-xs font-medium bg-yellow-400 text-red-700 px-2 py-1 rounded-full">HOT</span>
-                <h3 className="text-sm md:text-lg font-bold mt-1">BLACK FRIDAY</h3>
-                <p className="text-base md:text-xl font-extrabold my-1">45% OFF</p>
-                {!isMobile && (
-                  <button className="bg-white text-red-600 text-xs font-semibold px-4 py-1 rounded-full hover:bg-gray-100 transition-colors relative z-10 mt-1">
-                    Shop Now
-                  </button>
-                )}
+                <h3 className="text-lg font-bold mt-1">BLACK FRIDAY</h3>
+                <p className="text-xl font-extrabold my-1">45% OFF</p>
+                <button className="bg-white text-red-600 text-xs font-semibold px-4 py-1 rounded-full hover:bg-gray-100 transition-colors relative z-10 mt-1">
+                  Shop Now
+                </button>
               </div>
             </div>
           </div>
