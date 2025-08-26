@@ -38,7 +38,7 @@ const TopCategorySection = () => {
     <div className="mb-16">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-10">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+        <h2 className="text-xl md:text-3xl font-bold text-gray-800">
           TOP CATEGORIES THIS WEEK
         </h2>
 

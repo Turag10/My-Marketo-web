@@ -23,7 +23,7 @@ function Header() {
   const [showSpinner, setShowSpinner] = useState(false);
   
   // Use the cart context
-  const { cartItems, getCartCount } = useContext(CartContext);
+  const {  getCartCount } = useContext(CartContext);
   const cartItemsCount = getCartCount();
 
   const handleNavigation = (e, destination) => {
@@ -92,16 +92,17 @@ function Header() {
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 border-4 border-red-100 border-t-red-600 rounded-full animate-spin z-50"></div>
       )}
 
-      <header className="bg-white shadow-md sticky top-0 z-40">
+      <header className=" sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link
               to="/"
-              className="text-3xl font-bold text-gray-900 animate-rotate-y animate-once"
+              className="text-3xl font-bold text-gray-900 animate-rotate-y animate-once flex items-center"
               onClick={(e) => handleNavigation(e, "Home")}
             >
-              Market<span className="text-red-600">O</span>.
+              Marke<span className="text-red-600">TOP</span>
+              <span className="w-2 h-2 bg-black ml-1 mt-1"></span>
             </Link>
 
             {/* Desktop Nav */}

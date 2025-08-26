@@ -57,7 +57,7 @@ const WatchSection = () => {
               className="w-full h-full object-cover opacity-20"
             />
             <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-              <h2 className="text-xl font-bold mb-3 text-gray-800">Watches</h2>
+              <h2 className="text-3xl font-bold mb-3 text-gray-800">Watches</h2>
               <ul className="space-y-1.5 text-gray-700 text-sm">
                 {categories.map((cat, idx) => (
                   <li
