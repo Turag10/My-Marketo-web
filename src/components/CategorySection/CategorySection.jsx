@@ -9,10 +9,10 @@ const CategorySection = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isBlackFridayHovered, setIsBlackFridayHovered] = useState(false);
   
-  // Use the cart context
+
   const { addToCart } = useContext(CartContext);
 
-  // Categories data matching Marketo demo
+ 
   const allCategories = [
     {
       name: "Women's Fashion",
@@ -118,7 +118,7 @@ const CategorySection = () => {
   };
 
   const handleSubcategoryClick = (subcategory, e) => {
-    // Prevent the click from bubbling up to the category level
+   
     e.stopPropagation();
     setActiveSubcategory(subcategory);
   };
@@ -131,7 +131,7 @@ const CategorySection = () => {
   const renderProductCards = (products) => {
     return (
       <div className="grid grid-cols-2 gap-3">
-        {products.map((product, index) => (
+        {products.map((product) => (
           <div key={product.id} className="bg-white rounded p-2 shadow-sm border hover:shadow-md transition-shadow">
             <img 
               src={product.image} 
@@ -153,13 +153,13 @@ const CategorySection = () => {
   };
 
   return (
-    <section className="bg-white py-8 px-4 relative">
+    <section className="bg-white py-8 px-4 pt-2 pb-7 relative">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row gap-4 h-16">
           
           {/* Left Side - All Categories Dropdown */}
           <div className="lg:w-1/4 h-full relative">
-            <div className="bg-yellow-300 text-white p-4 rounded-lg flex justify-between items-center cursor-pointer h-full"
+            <div className="bg-yellow-300 text-white p-4 flex justify-between items-center cursor-pointer h-full"
                  onClick={() => setExpandedMenu(expandedMenu === "categories" ? null : "categories")}>
               <h3 className="text-lg font-bold flex items-center">
                 <FiMenu className="mr-2" />
@@ -214,7 +214,7 @@ const CategorySection = () => {
                         </div>
                       )}
 
-                      {/* Show products when subcategory is active */}
+                      {/*  products when subcategory is active */}
                       {activeSubcategory && activeCategory?.name === category.name && (
                         <div className="absolute left-full top-0 ml-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-4">
                           <div className="flex justify-between items-center mb-3">
@@ -239,20 +239,20 @@ const CategorySection = () => {
             )}
           </div>
 
-          {/* Middle - Search Bar */}
+          {/* Mid- Search Bar */}
           <div className="lg:w-1/2 h-full flex items-center">
-            <div className="w-full bg-white rounded-lg shadow-md p-4 h-full flex items-center">
+            <div className="w-full bg-white shadow-md p-4 h-full flex items-center">
               <form onSubmit={handleSearch} className="flex w-full">
                 <input
                   type="text"
                   placeholder="Search for products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 border border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 h-12"
+                  className="flex-1 border border-gray-300  px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 h-12"
                 />
                 <button
                   type="submit"
-                  className="bg-yellow-300 hover:bg-red-700 text-white px-6 rounded-r-lg transition-colors flex items-center h-12"
+                  className="bg-yellow-300 hover:bg-red-700 text-white px-6 transition-colors flex items-center h-12"
                 >
                   <FiSearch size={20} />
                   <span className="ml-2"></span>
@@ -261,10 +261,10 @@ const CategorySection = () => {
             </div>
           </div>
 
-          {/* Right Side - Black Friday Banner with Animation */}
+          {/* Right Side - Black Friday */}
           <div className="lg:w-1/4 h-full">
             <div 
-              className={`bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-md p-4 h-full flex flex-col justify-center relative overflow-hidden transition-all duration-500 ${
+              className={`bg-gradient-to-br from-gray-900 to-gray-800 text-white shadow-md p-4 h-full flex flex-col justify-center relative overflow-hidden transition-all duration-500 ${
                 isBlackFridayHovered ? "bg-gradient-to-br from-white to-black" : ""
               }`}
               onMouseEnter={() => setIsBlackFridayHovered(true)}

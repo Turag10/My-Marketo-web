@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-// Import tab images
+
 import tabwatch1 from "../../assets/tabwatch1.png";
 import tabwatch2 from "../../assets/tabwatch2.png";
 
-// Import product images
+
 import watch1 from "../../assets/watch1.png";
 import watch2 from "../../assets/watch2.png";
 import watch3 from "../../assets/watch3.png";

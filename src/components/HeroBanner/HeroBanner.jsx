@@ -8,8 +8,8 @@ import promo2 from "../../assets/promo2.png";
 
 const HeroBanner = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const [entered, setEntered] = useState(false); // slider entry animation
-  const [promoEntered, setPromoEntered] = useState(false); // promo entry animation
+  const [entered, setEntered] = useState(false); 
+  const [promoEntered, setPromoEntered] = useState(false); 
 
   const bannerData = [
     {
@@ -49,7 +49,7 @@ const HeroBanner = () => {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // Trigger first-load animation for promos
+
   useEffect(() => {
     const raf = requestAnimationFrame(() => setPromoEntered(true));
     return () => cancelAnimationFrame(raf);
@@ -61,13 +61,13 @@ const HeroBanner = () => {
   const baseTransit = "transition-all ease-out will-change-transform";
   const slow = "duration-[1100ms]";
   const shown = "opacity-100 translate-x-0";
-  const fromRight = "opacity-0 translate-x-24"; // right ➜ left
-  const fromLeft = "opacity-0 -translate-x-24"; // left ➜ right
+  const fromRight = "opacity-0 translate-x-24"; 
+  const fromLeft = "opacity-0 -translate-x-24"; 
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch mb-10">
       {/* LEFT COLUMN: Slider */}
-      <div className="relative col-span-2 bg-black rounded-xl overflow-hidden h-[500px]">
+      <div className="relative col-span-2 bg-black  overflow-hidden h-[500px]">
         {bannerData.map((item, index) => (
           <div
             key={index}
@@ -79,7 +79,7 @@ const HeroBanner = () => {
             <img
               src={item.image}
               alt={`slide-${index}`}
-              className="w-full h-full object-cover opacity-1000"
+              className="w-full h-full object-cover opacity-2000 "
             />
             <div className="absolute inset-0 bg-blue-900/40" />
 
@@ -87,25 +87,24 @@ const HeroBanner = () => {
             {activeTab === index && (
               <div className="absolute top-0 left-0 w-full h-full flex items-center p-10">
                 <div className="max-w-md text-white">
-                  {/* Title: right ➜ left */}
-                  <h2
-                    className={`${baseTransit} ${slow} ${
-                      entered ? shown : fromRight
-                    } text-4xl font-bold mb-4 leading-tight`}
-                    style={{ transitionDelay: entered ? "0ms" : "0ms" }}
-                  >
-                    {item.title}
-                  </h2>
-
-                  {/* Subtitle: right ➜ left */}
+                 
                   <p
                     className={`${baseTransit} ${slow} ${
                       entered ? shown : fromRight
-                    } text-xl text-yellow-300 font-semibold mb-6`}
+                    } text-xl text-white font-semibold mb-4`}
                     style={{ transitionDelay: entered ? "0ms" : "200ms" }}
                   >
                     {item.subtitle}
                   </p>
+
+                   <h2
+                    className={`${baseTransit} ${slow} ${
+                      entered ? shown : fromRight
+                    } text-3xl font-bold mb-4 leading-tight`}
+                    style={{ transitionDelay: entered ? "0ms" : "0ms" }}
+                  >
+                    {item.title}
+                  </h2>
 
                   {/* Buttons */}
                   <div className="flex space-x-4">
@@ -113,17 +112,16 @@ const HeroBanner = () => {
                     <button
                       className={`${baseTransit} ${slow} ${
                         entered ? shown : fromRight
-                      } px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700`}
+                      } px-6 py-3 bg-yellow-400 text-black font-medium  hover:bg-blue-700`}
                       style={{ transitionDelay: entered ? "0ms" : "400ms" }}
                     >
                       {item.buttonText}
                     </button>
 
-                    {/* Btn2: left ➜ right */}
                     <button
                       className={`${baseTransit} ${slow} ${
                         entered ? shown : fromLeft
-                      } px-6 py-3 bg-yellow-400 text-black font-medium rounded-lg hover:bg-yellow-500`}
+                      } px-6 py-3  text-blue-500 font-medium hover:bg-yellow-500 border border-blue-500`}
                       style={{ transitionDelay: entered ? "0ms" : "600ms" }}
                     >
                       {item.buttonText2}

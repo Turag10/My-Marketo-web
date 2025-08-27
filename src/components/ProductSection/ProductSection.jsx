@@ -5,7 +5,7 @@ import laptop1 from "../../assets/laptop1.png";
 import laptop2 from "../../assets/laptop2.png";
 import laptop3 from "../../assets/laptop3.png";
 import laptop4 from "../../assets/laptop4.png";
-import bgImg from "../../assets/bg-pattern.webp"; // faded background image
+import bgImg from "../../assets/bg-pattern.webp"; 
 
 const products = [
   {
@@ -61,7 +61,7 @@ const ProductSection = () => {
       <div className="container mx-auto px-6 relative">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-          {/* Header Text on Top Left */}
+          
           <div className="text-left mb-6 md:mb-0">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
               Featured Laptops
@@ -109,7 +109,7 @@ const ProductSection = () => {
                   ))}
                 </div>
 
-                {/* Name */}
+               
                 <h3 className="font-bold text-xl text-gray-800 mb-2">{p.name}</h3>
 
                 {/* Prices */}
